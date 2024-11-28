@@ -1,67 +1,82 @@
-// Implements algebraic operations and the square root function without using 
-// the Java operations a + b, a - b, a * b, a / b, a % b, and without calling 
-// Math.sqrt. All the functions in this class operate on int values and
-// return int values.
-
 public class Algebra {
-	public static void main(String args[]) {
-	    // Tests some of the operations
-	    System.out.println(plus(2,3));   // 2 + 3
-	    System.out.println(minus(7,2));  // 7 - 2
-   		System.out.println(minus(2,7));  // 2 - 7
- 		System.out.println(times(3,4));  // 3 * 4
-   		System.out.println(plus(2,times(4,2)));  // 2 + 4 * 2
-   		System.out.println(pow(5,3));      // 5^3
-   		System.out.println(pow(3,5));      // 3^5
-   		System.out.println(div(12,3));   // 12 / 3    
-   		System.out.println(div(5,5));    // 5 / 5  
-   		System.out.println(div(25,7));   // 25 / 7
-   		System.out.println(mod(25,7));   // 25 % 7
-   		System.out.println(mod(120,6));  // 120 % 6    
-   		System.out.println(sqrt(36));
-		System.out.println(sqrt(263169));
-   		System.out.println(sqrt(76123));
-	}  
+    public static void main(String[] args) {
+    }
 
-	// Returns x1 + x2
-	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}
+    public static int plus(int number1, int number2) {
+        if (number2 > 0) {
+            for (int i = 0; i < number2; i++) {
+                number1++;
+            }
+        } else if (number2 < 0) {
+            for (int i = 0; i > number2; i--) {
+                number1--;
+            }
+        }
+        return number1;
+    }
 
-	// Returns x1 - x2
-	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}
+    public static int minus(int number1, int number2) {
+        if (number2 > 0) {
+            for (int i = 0; i < number2; i++) {
+                number1--;
+            }
+        } else if (number2 < 0) {
+            for (int i = 0; i > number2; i--) {
+                number1++;
+            }
+        }
+        return number1;
+    }
 
-	// Returns x1 * x2
-	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}
+    public static int times(int number1, int number2) {
+        int product = 0;
+        if (number2 >= 0) {
+            for (int i = 0; i < number2; i++) {
+                product = plus(product, number1);
+            }
+        } else {
+            for (int i = number2; i < 0; i++) {
+                product = minus(product, number1);
+            }
+        }
+        return product;
+    }
 
-	// Returns x^n (for n >= 0)
-	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
-	}
+    public static int pow(int base, int exponent) {
+        int result = 1;
+        for (int i = 0; i < exponent; i++) {
+            result = times(result, base);
+        }
+        return result;
+    }
 
-	// Returns the integer part of x1 / x2 
-	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}
+    public static int div(int dividend, int divisor) {
+        int quotient = 0;
+        if (dividend > 0) {
+            while (dividend >= divisor) {
+                dividend = minus(dividend, divisor);
+                quotient++;
+            }
+        }
+        if (dividend < 0) {
+            while (dividend != 0) {
+                dividend = plus(dividend, divisor);
+                quotient--;
+            }
+        }
+        return quotient;
+    }
 
-	// Returns x1 % x2
-	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}	
+    public static int mod(int dividend, int divisor) {
+        int remainder = minus(dividend, times(div(dividend, divisor), divisor));
+        return remainder;
+    }
 
-	// Returns the integer part of sqrt(x) 
-	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
-	}	  	  
+    public static int sqrt(int number) {
+        int root = 0;
+        while (times(root, root) < number) {
+            root++;
+        }
+        return root;
+    }
 }

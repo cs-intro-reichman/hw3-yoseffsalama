@@ -1,49 +1,97 @@
-/** Functions for checking if a given string is an anagram. */
+import java.util.Random;
+
+
 public class Anagram {
 	public static void main(String args[]) {
-		// Tests the isAnagram function.
-		System.out.println(isAnagram("silent","listen"));  // true
-		System.out.println(isAnagram("William Shakespeare","I am a weakish speller")); // true
-		System.out.println(isAnagram("Madam Curie","Radium came")); // true
-		System.out.println(isAnagram("Tom Marvolo Riddle","I am Lord Voldemort")); // true
 
-		// Tests the preProcess function.
+		System.out.println(isAnagram("silent", "listen"));  // true
+		System.out.println(isAnagram("William Shakespeare", "I am a weakish speller")); // true
+		System.out.println(isAnagram("Madam Curie", "Radium came")); // true
+		System.out.println(isAnagram("Tom Marvolo Riddle", "I am Lord Voldemort")); // true
+
+
 		System.out.println(preProcess("What? No way!!!"));
 		
-		// Tests the randomAnagram function.
+	
 		System.out.println("silent and " + randomAnagram("silent") + " are anagrams.");
 		
-		// Performs a stress test of randomAnagram 
-		String str = "1234567";
-		Boolean pass = true;
-		//// 10 can be changed to much larger values, like 1000
+	
+		String originalStr = "1234567";
+		Boolean testPassed = true;
+
 		for (int i = 0; i < 10; i++) {
-			String randomAnagram = randomAnagram(str);
-			System.out.println(randomAnagram);
-			pass = pass && isAnagram(str, randomAnagram);
-			if (!pass) break;
+			String randomAnagramStr = randomAnagram(originalStr);
+			System.out.println(randomAnagramStr);
+			testPassed = testPassed && isAnagram(originalStr, randomAnagramStr);
+			if (!testPassed) break;
 		}
-		System.out.println(pass ? "test passed" : "test Failed");
+		System.out.println(testPassed ? "test passed" : "test failed");
 	}  
 
-	// Returns true if the two given strings are anagrams, false otherwise.
-	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
-		return false;
+
+	public static boolean isAnagram(String firstStr, String secondStr) {
+		String processedFirstStr = preProcess(firstStr);
+        String processedSecondStr = preProcess(secondStr);
+		if (processedFirstStr.length() != processedSecondStr.length()) {
+            return false;
+        }
+
+		for (int i = 0; i < processedFirstStr.length(); i++) {
+            char currentChar = processedFirstStr.charAt(i);
+            boolean isMatchFound = false;
+
+			for (int j = 0; j < processedSecondStr.length(); j++) {
+                if (processedSecondStr.charAt(j) == currentChar) {
+					processedSecondStr = processedSecondStr.substring(0, j) + processedSecondStr.substring(j + 1); // Remove matched character
+                    isMatchFound = true;
+                    break;
+                }
+            }
+
+            if (!isMatchFound) {
+                return false;
+            }
+        }
+
+        return true;
 	}
 	   
-	// Returns a preprocessed version of the given string: all the letter characters are converted
-	// to lower-case, and all the other characters are deleted, except for spaces, which are left
-	// as is. For example, the string "What? No way!" becomes "whatnoway"
-	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
-	} 
+
+	public static String preProcess(String inputStr) {
+		StringBuilder processedStr = new StringBuilder();
+        
+        for (int i = 0; i < inputStr.length(); i++) {
+            char currentChar = inputStr.charAt(i);
+
+            if (Character.isLetter(currentChar)) {
+                processedStr.append(Character.toLowerCase(currentChar));
+            } else if (currentChar == ' ') {
+                processedStr.append(currentChar);
+            }
+        }
+        
+        return processedStr.toString();
+	}
 	   
-	// Returns a random anagram of the given string. The random anagram consists of the same
-	// characters as the given string, re-arranged in a random order. 
-	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
-		return "";
+
+	public static String randomAnagram(String inputStr) {
+		String processedStr = preProcess(inputStr);
+        
+
+        char[] charArray = processedStr.toCharArray();
+        
+      
+        Random random = new Random();
+        
+ 
+        for (int i = 0; i < charArray.length; i++) {
+            int randomIndex = random.nextInt(charArray.length); 
+            char tempChar = charArray[i];
+            charArray[i] = charArray[randomIndex];
+            charArray[randomIndex] = tempChar;
+        }
+        
+
+        return new String(charArray);
 	}
 }
