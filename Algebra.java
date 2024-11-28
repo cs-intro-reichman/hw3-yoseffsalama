@@ -1,82 +1,84 @@
 public class Algebra {
     public static void main(String[] args) {
+
     }
 
-    public static int plus(int number1, int number2) {
-        if (number2 > 0) {
-            for (int i = 0; i < number2; i++) {
-                number1++;
+    public static int sum(int a, int b) {
+        if (b > 0) {
+            for (int i = 0; i < b; i++) {
+                a++;
             }
-        } else if (number2 < 0) {
-            for (int i = 0; i > number2; i--) {
-                number1--;
+        } else if (b < 0) {
+            for (int i = 0; i > b; i--) {
+                a--;
             }
         }
-        return number1;
+        return a;
     }
 
-    public static int minus(int number1, int number2) {
-        if (number2 > 0) {
-            for (int i = 0; i < number2; i++) {
-                number1--;
+    public static int substraction(int a, int b) {
+        if (b > 0) {
+            for (int i = 0; i < b; i++) {
+                a--;
             }
-        } else if (number2 < 0) {
-            for (int i = 0; i > number2; i--) {
-                number1++;
+        } else if (b < 0) {
+            for (int i = 0; i > b; i--) {
+                a++;
             }
         }
-        return number1;
+        return a;
     }
 
-    public static int times(int number1, int number2) {
-        int product = 0;
-        if (number2 >= 0) {
-            for (int i = 0; i < number2; i++) {
-                product = plus(product, number1);
-            }
-        } else {
-            for (int i = number2; i < 0; i++) {
-                product = minus(product, number1);
+    public static int mult(int a, int b) {
+        int multiplication = 0;
+        if (b >= 0) {
+            for (int i = 0; i < b; i++) {
+                multiplication = sum(multiplication, a);
             }
         }
-        return product;
-    }
-
-    public static int pow(int base, int exponent) {
-        int result = 1;
-        for (int i = 0; i < exponent; i++) {
-            result = times(result, base);
-        }
-        return result;
-    }
-
-    public static int div(int dividend, int divisor) {
-        int quotient = 0;
-        if (dividend > 0) {
-            while (dividend >= divisor) {
-                dividend = minus(dividend, divisor);
-                quotient++;
+        else {
+            for (int i = b; i < 0; i++) {
+                multiplication = substraction(multiplication, a);
             }
         }
-        if (dividend < 0) {
-            while (dividend != 0) {
-                dividend = plus(dividend, divisor);
-                quotient--;
+        return multiplication;
+    }
+
+    public static int power(int a, int b) {
+        int power = 1;
+        for (int i = 0; i < b; i++) {
+            power = mult(power, a);
+        }
+        return power;
+    }
+
+    public static int div(int a, int b) {
+        int division = 0;
+        if (a > 0) {
+            while (a >= b) {
+                a = substraction(a, b);
+                division++;
             }
         }
-        return quotient;
-    }
-
-    public static int mod(int dividend, int divisor) {
-        int remainder = minus(dividend, times(div(dividend, divisor), divisor));
-        return remainder;
-    }
-
-    public static int sqrt(int number) {
-        int root = 0;
-        while (times(root, root) < number) {
-            root++;
+        if (a < 0) {
+            while (a != 0) {
+                a = sum(a, b);
+                division--;
+            }
         }
-        return root;
+        return division;
     }
-}
+
+    public static int mod(int a, int b) {
+        int modulo = substraction(a, mult(div(a, b), b));
+        return modulo;
+    }
+
+    public static int sqrt(int a) {
+            int root = 0;
+            while (mult(root, root) < a) {
+                root++;
+            }
+            return (root);
+		}
+	}

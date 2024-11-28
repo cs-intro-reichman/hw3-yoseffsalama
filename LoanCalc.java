@@ -1,64 +1,65 @@
 public class LoanCalc {
 	
-	static double epsilon = 0.001;  
-	static int iterationCount = 1; 
-	
-	
+	static double eps = 0.001;  
+	static int counter = 1; 
+
 	public static void main(String[] args) {		
-		// Gets the loan data
-		double loanAmount = Double.parseDouble(args[0]);
-		double interestRate = Double.parseDouble(args[1]);
-		int periods = Integer.parseInt(args[2]);
-		System.out.println("Loan Amount = " + loanAmount + ", interest rate = " + interestRate + "%, periods = " + periods);
-        interestRate = interestRate/100 + 1;
 
-		// Computes the periodical payment using brute force search
+		double loan = Double.parseDouble(args[0]);
+		double rate = Double.parseDouble(args[1]);
+		int n = Integer.parseInt(args[2]);
+		System.out.println("Loan = " + loan + ", interest rate = " + rate + "%, periods = " + n);
+        rate = rate/100 +1;
+
+	
 		System.out.print("\nPeriodical payment, using brute force: ");
-		System.out.println((int) bruteForceSolver(loanAmount, interestRate, periods, epsilon));
-		System.out.println("Number of iterations: " + (iterationCount - 2));
+		System.out.println((int) bruteForceSolver(loan, rate, n, eps));
+		System.out.println("number of iterations: " + (counter-2));
 
-		// Computes the periodical payment using bisection search
-		System.out.print("\nPeriodical payment, using bisection search: ");
-		System.out.println((int) bisectionSolver(loanAmount, interestRate, periods, epsilon));
-		System.out.println("Number of iterations: " + iterationCount);
+
+		System.out.print("\nPeriodical payment, using bi-section search: ");
+		System.out.println((int) bisectionSolver(loan, rate, n, eps));
+		System.out.println("number of iterations: " + counter);
 	}
 	
 
-    public static double bruteForceSolver(double loanAmount, double interestRate, double periods, double epsilon) {
-        double balance = loanAmount;
-        double paymentGuess = loanAmount / periods;
+    public static double bruteForceSolver(double loan, double rate, double n, double eps) {
+        double balance = loan;
+        double g = loan/n;
         while (balance > 0) {      
-            balance = loanAmount;
-            for (int i = 0; i < periods; i++) {
-                balance = (balance - paymentGuess) * interestRate;          
+            balance = loan;
+            for (int i = 0; i < n; i++) {
+                balance = (balance - g)*rate;          
             }             
-            paymentGuess += epsilon;
-            iterationCount++;
+            g += eps;
+            counter++;
         }       
-        return paymentGuess;
+       
+        return g;
     }
+    
 
-    public static double bisectionSolver(double loanAmount, double interestRate, double periods, double epsilon) {
-        iterationCount = 0;
-        double balance = loanAmount;
-        double highPayment = loanAmount;
-        double lowPayment = loanAmount / periods;  
-        double paymentGuess = (lowPayment + highPayment) / 2;
-        while ((highPayment - lowPayment) > epsilon) {      
-            balance = loanAmount;
-            for (int i = 0; i < periods; i++) {
-                balance = (balance - paymentGuess) * interestRate;          
+    public static double bisectionSolver(double loan, double rate, double n, double eps) {
+        counter=0;
+        double balance = loan;
+        double hi = loan;
+        double lo = loan/n;  
+        double g = (lo+hi)/2;
+        while ((hi-lo) > eps) {      
+            balance = loan;
+            for (int i = 0; i < n; i++) {
+                balance = (balance - g)*rate;          
             }   
             if (balance > 0) { 
-                lowPayment = paymentGuess;
-                paymentGuess = (lowPayment + highPayment) / 2;
+                lo = g;
+                g = (lo+hi)/2;
                 
             } else { 
-                highPayment = paymentGuess;
-                paymentGuess = (lowPayment + highPayment) / 2;
+                hi = g;
+                g = (lo+hi)/2;
             }               
-            iterationCount++;
+            counter ++;
         }            
-        return paymentGuess;
+        return g;
     }
 }
