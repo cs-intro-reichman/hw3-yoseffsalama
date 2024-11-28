@@ -76,9 +76,9 @@ public class Algebra {
 
     public static int sqrt(int a) {
             int root = 0;
-            while (mult(root, root) < a) {
+            while (mult(root, root) <= a) {
                 root++;
             }
-            return (root);
+            return (--root);
 		}
 	}
