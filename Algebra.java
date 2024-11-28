@@ -3,7 +3,7 @@ public class Algebra {
 
     }
 
-    public static int sum(int a, int b) {
+    public static int plus(int a, int b) {
         if (b > 0) {
             for (int i = 0; i < b; i++) {
                 a++;
@@ -16,7 +16,7 @@ public class Algebra {
         return a;
     }
 
-    public static int substraction(int a, int b) {
+    public static int minus(int a, int b) {
         if (b > 0) {
             for (int i = 0; i < b; i++) {
                 a--;
@@ -29,25 +29,25 @@ public class Algebra {
         return a;
     }
 
-    public static int mult(int a, int b) {
+    public static int times(int a, int b) {
         int multiplication = 0;
         if (b >= 0) {
             for (int i = 0; i < b; i++) {
-                multiplication = sum(multiplication, a);
+                multiplication = plus(multiplication, a);
             }
         }
         else {
             for (int i = b; i < 0; i++) {
-                multiplication = substraction(multiplication, a);
+                multiplication = minus(multiplication, a);
             }
         }
         return multiplication;
     }
 
-    public static int power(int a, int b) {
+    public static int pow(int a, int b) {
         int power = 1;
         for (int i = 0; i < b; i++) {
-            power = mult(power, a);
+            power = times(power, a);
         }
         return power;
     }
@@ -56,13 +56,13 @@ public class Algebra {
         int division = 0;
         if (a > 0) {
             while (a >= b) {
-                a = substraction(a, b);
+                a = minus(a, b);
                 division++;
             }
         }
         if (a < 0) {
             while (a != 0) {
-                a = sum(a, b);
+                a = plus(a, b);
                 division--;
             }
         }
@@ -70,15 +70,15 @@ public class Algebra {
     }
 
     public static int mod(int a, int b) {
-        int modulo = substraction(a, mult(div(a, b), b));
+        int modulo = minus(a, times(div(a, b), b));
         return modulo;
     }
 
     public static int sqrt(int a) {
             int root = 0;
-            while (mult(root, root) <= a) {
+            while (times(root, root) <= a) {
                 root++;
             }
             return (--root);
-		}
-	}
+    }
+}
